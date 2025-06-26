@@ -19,7 +19,7 @@
             <p><strong>Endereço:</strong> {{ d['logradouro'] }}, {{ d['numero'] }} - {{ d['bairro'] }}, {{ d['cidade'] }} / {{ d['uf'] }} - CEP: {{ d['cep'] }}</p>
             <p><strong>Referência:</strong> {{ d['referencia'] }}</p>
             {% if d['anexo'] %}
-                <p><strong>Anexo enviado:</strong> {{ d['anexo'] }} (não salvo)</p>
+                <p><strong>Anexo enviado:</strong> {{ d['anexo'] }}</p>
             {% endif %}
         {% endfor %}
     {% else %}
