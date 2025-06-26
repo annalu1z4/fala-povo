@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Fala, Povo! - Nova denúncia</title>
+</head>
+<body>
+    <h1>Registrar uma denúncia</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <fieldset>
+            <legend>Identificação</legend>
+
+            <div id="identificacao">
+                <label>Nome: <input type="text" name="nome" required></label><br>
+                <label>E-mail: <input type="email" name="email" required></label><br>
+                <label>Telefone: <input type="tel" name="telefone" required></label>
+            </div>
+
+            <label>
+                <input type="checkbox" id="anonimo" name="anonimo">
+                Desejo fazer uma denúncia anônima
+            </label>
+
+        </fieldset><br>
+
+        <fieldset>
+            <legend>Categoria do Serviço</legend>
+            <label>Categoria:
+                <select name="categoria" required>
+                    <option value="">Selecione uma categoria</option>
+                    <option>Buraco(s) na rua</option>
+                    <option>Calçada danificada</option>
+                    <option>Falta de acessibilidade</option>
+                    <option>Falta de semáforo</option>
+                    <option>Mau funcionamento de semáforo</option>
+                    <option>Ponto de ônibus em más condições</option>
+                    <option>Falta de sinalização</option>
+                    <option>Poste com lâmpadas queimadas</option>
+                    <option>Área sem iluminação</option>
+                    <option>Acúmulo de lixo</option>
+                    <option>Bueiro entupido</option>
+                    <option>Falta de coleta seletiva</option>
+                    <option>Árvore caída</option>
+                    <option>Esgoto a céu aberto</option>
+                    <option>Queima irregular de lixo</option>
+                    <option>Terrenos abandonados</option>
+                    <option>Outros</option>
+                </select>
+            </label><br><br>
+            <label>Descrição:<br>
+                <textarea name="descricao" rows="5" cols="40" required></textarea>
+            </label>
+        </fieldset><br>
+
+        <fieldset>
+            <legend>Localização</legend>
+            <label>CEP: <input type="text" name="cep" required></label><br>
+            <label>Logradouro: <input type="text" name="logradouro" readonly></label><br>
+            <label>Número: <input type="text" name="numero" required></label><br>
+            <label>Bairro: <input type="text" name="bairro" readonly></label><br>
+            <label>Cidade: <input type="text" name="cidade" readonly></label><br>
+            <label>UF:
+                <select name="uf" required readonly>
+                    <option value="">Selecione</option>
+             <option value="">Selecione</option>
+                        <option value="AC">AC</option>
+                        <option value="AL">AL</option>
+                        <option value="AP">AP</option>
+                        <option value="AM">AM</option>
+                        <option value="BA">BA</option>
+                        <option value="CE">CE</option>
+                        <option value="DF">DF</option>
+                        <option value="ES">ES</option>
+                        <option value="GO">GO</option>
+                        <option value="MA">MA</option>
+                        <option value="MT">MT</option>
+                        <option value="MS">MS</option>
+                        <option value="MG">MG</option>
+                        <option value="PA">PA</option>
+                        <option value="PB">PB</option>
+                        <option value="PR">PR</option>
+                        <option value="PE">PE</option>
+                        <option value="PI">PI</option>
+                        <option value="RJ">RJ</option>
+                        <option value="RN">RN</option>
+                        <option value="RS">RS</option>
+                        <option value="RO">RO</option>
+                        <option value="RR">RR</option>
+                        <option value="SC">SC</option>
+                        <option value="SP">SP</option>
+                        <option value="SE">SE</option>
+                        <option value="TO">TO</option>
+                </select>
+            </label><br>
+            <label>Referência: <input type="text" name="referencia"></label>
+        </fieldset><br>
+
+        <fieldset>
+            <legend>Anexos</legend>
+            <input type="file" name="anexo" accept=".jpg,.jpeg,.png,.mp4,.rar,.zip" max-size="10485760" required multiple>
+            <p>*Formatos aceitos: JPG, JPEG, PNG, MP4, RAR, ZIP. Tamanho máximo permitido: 10 MB.</p>
+        </fieldset><br>
+
+        <button type="submit">Enviar</button>
+        <button type="reset">Cancelar</button>
+    </form>
+    <br><a href="/">Voltar</a>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

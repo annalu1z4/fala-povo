@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Fala, Povo! - Denúncias</title>
+</head>
+<body>
+    <h1>Denúncias registradas</h1>
+    {% if denuncias %}
+        {% for d in denuncias %}
+            <hr>
+            <p><strong>Categoria:</strong> {{ d['categoria'] }}</p>
+            <p><strong>Descrição:</strong> {{ d['descricao'] }}</p>
+            {% if d['nome'] == 'Anônimo' %}
+                <p><em>Denúncia anônima</em></p>
+            {% else %}
+                <p><em>Dados pessoais ocultados por privacidade.</em></p>
+            {% endif %}
+            <p><strong>Endereço:</strong> {{ d['logradouro'] }}, {{ d['numero'] }} - {{ d['bairro'] }}, {{ d['cidade'] }} / {{ d['uf'] }} - CEP: {{ d['cep'] }}</p>
+            <p><strong>Referência:</strong> {{ d['referencia'] }}</p>
+            {% if d['anexo'] %}
+                <p><strong>Anexo enviado:</strong> {{ d['anexo'] }} (não salvo)</p>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <p>Nenhuma denúncia registrada ainda.</p>
+    {% endif %}
+    <br><a href="/">Voltar</a>
+
+</body>
+</html>
