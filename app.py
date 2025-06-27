@@ -1,4 +1,4 @@
-import json
+import sqlite3
 import os
 from flask import Flask, render_template, request, redirect, send_from_directory
 
@@ -7,6 +7,7 @@ app = Flask(__name__)
 ARQUIVO_DADOS = 'denuncias.json'
 UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'mp4'}
+DATABASE_URL = os.environ.get("postgresql://fala_povo_db_user:1h897s6Rki1raVwAhUNpLSmADqjMK78j@dpg-d1fh52er433s73fidc40-a/fala_povo_db")
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024
@@ -14,20 +15,43 @@ app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
+def conectar_banco():
+    return sqlite3.connect('denuncias.db')
+
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-def carregar_denuncias():
-    if os.path.exists(ARQUIVO_DADOS):
-        with open(ARQUIVO_DADOS, 'r', encoding='utf-8') as f:
-            return json.load(f)
-    return []
+def salvar_denuncia(dados):
+    conn = conectar_banco()
+    cursor = conn.cursor()
 
-def salvar_denuncia(denuncia):
-    denuncias = carregar_denuncias()
-    denuncias.append(denuncia)
-    with open(ARQUIVO_DADOS, 'w', encoding='utf-8') as f:
-        json.dump(denuncias, f, ensure_ascii=False, indent=4)
+    cursor.execute("""
+        INSERT INTO denuncias (
+            nome, email, telefone, categoria, descricao,
+            cep, logradouro, numero, bairro, cidade, uf,
+            referencia, anexo
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    """, (
+        dados['nome'], dados['email'], dados['telefone'],
+        dados['categoria'], dados['descricao'], dados['cep'],
+        dados['logradouro'], dados['numero'], dados['bairro'],
+        dados['cidade'], dados['uf'], dados['referencia'],
+        dados['anexo']
+    ))
+
+    conn.commit()
+    conn.close()
+
+def carregar_denuncias():
+    conn = conectar_banco()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM denuncias ORDER BY data_envio DESC")
+    colunas = [col[0] for col in cursor.description]
+    registros = [dict(zip(colunas, linha)) for linha in cursor.fetchall()]
+
+    conn.close()
+    return registros
 
 @app.route('/')
 def index():
