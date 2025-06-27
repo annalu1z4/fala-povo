@@ -8,7 +8,7 @@ body {
   font-family: "Segoe UI", sans-serif;
   background-color: #fff;
   color: #2e7d32;
-  padding-top: 130px;
+  padding-top: 60px;
   line-height: 1.6;
 }
 
@@ -17,6 +17,11 @@ body {
   font-weight: bold;
   font-size: 1.2rem;
   margin-right: 2rem;
+  text-decoration: none;
+}
+
+.logo:hover {
+  text-decoration: none;
 }
 
 .navbar {

@@ -16,9 +16,8 @@
   </head>
   <body>
     <nav class="navbar">
-      <span class="logo">📢 Fala, Povo!</span>
+      <a href="/" class="logo">📢 Fala, Povo!</a>
       <ul>
-        <li><a href="/">Início</a></li>
         <li><a href="/denunciar">Denunciar</a></li>
         <li><a href="/denuncias">Denúncias</a></li>
       </ul>
@@ -36,8 +35,18 @@
           d['cep'] }}
         </p>
         <p><strong>Referência:</strong> {{ d['referencia'] }}</p>
-        {% if d['anexo'] %}
-        <p><strong>Anexo enviado:</strong> {{ d['anexo'] }}</p>
+
+        {% if d.anexo %}
+        <p>
+          <strong>Anexo:</strong>
+          <a
+            href="{{ url_for('uploaded_file', filename=d.anexo) }}"
+            target="_blank"
+            >Visualizar / Baixar</a
+          >
+        </p>
+        {% else %}
+        <p class="text-muted"><em>Nenhum anexo enviado</em></p>
         {% endif %} {% if d['nome'] == 'Anônimo' %}
         <p><em>Denúncia anônima</em></p>
         {% else %}

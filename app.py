@@ -1,10 +1,21 @@
 import json
 import os
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, send_from_directory
 
 app = Flask(__name__)
 
 ARQUIVO_DADOS = 'denuncias.json'
+UPLOAD_FOLDER = 'uploads'
+ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'mp4'}
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024
+
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def carregar_denuncias():
     if os.path.exists(ARQUIVO_DADOS):
@@ -26,6 +37,13 @@ def index():
 def denunciar():
     if request.method == 'POST':
         anonimo = 'anonimo' in request.form
+        
+        file = request.files.get('anexo')
+        filename = None
+
+        if file and allowed_file(file.filename):
+            filename = file.filename
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
         dados = {
             'nome': 'Anônimo' if anonimo else request.form['nome'],
@@ -40,7 +58,7 @@ def denunciar():
             'cidade': request.form.get('cidade', ''),
             'uf': request.form.get('uf', ''),
             'referencia': request.form.get('referencia', ''),
-            'anexo': request.files.get('anexo').filename if request.files.get('anexo') else None
+            'anexo': filename
         }
 
         salvar_denuncia(dados)
@@ -56,6 +74,10 @@ def denuncias():
 @app.route('/sucesso')
 def sucesso():
     return render_template('sucesso.html')
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
