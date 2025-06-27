@@ -1,31 +1,52 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Fala, Povo! - Denúncias</title>
-</head>
-<body>
-    <h1>Denúncias registradas</h1>
-    {% if denuncias %}
-        {% for d in denuncias %}
-            <hr>
-            <p><strong>Categoria:</strong> {{ d['categoria'] }}</p>
-            <p><strong>Descrição:</strong> {{ d['descricao'] }}</p>
-            {% if d['nome'] == 'Anônimo' %}
-                <p><em>Denúncia anônima</em></p>
-            {% else %}
-                <p><em>Dados pessoais ocultados por privacidade.</em></p>
-            {% endif %}
-            <p><strong>Endereço:</strong> {{ d['logradouro'] }}, {{ d['numero'] }} - {{ d['bairro'] }}, {{ d['cidade'] }} / {{ d['uf'] }} - CEP: {{ d['cep'] }}</p>
-            <p><strong>Referência:</strong> {{ d['referencia'] }}</p>
-            {% if d['anexo'] %}
-                <p><strong>Anexo enviado:</strong> {{ d['anexo'] }}</p>
-            {% endif %}
-        {% endfor %}
-    {% else %}
-        <p>Nenhuma denúncia registrada ainda.</p>
-    {% endif %}
-    <br><a href="/">Voltar</a>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Denúncias registradas</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='favicon.png') }}"
+      type="image/png"
+    />
+  </head>
+  <body>
+    <nav class="navbar">
+      <span class="logo">📢 Fala, Povo!</span>
+      <ul>
+        <li><a href="/">Início</a></li>
+        <li><a href="/denunciar">Denunciar</a></li>
+        <li><a href="/denuncias">Ver denúncias</a></li>
+      </ul>
+    </nav>
 
-</body>
+    <div class="container">
+      <h1 class="center-title">Denúncias registradas</h1>
+      {% if denuncias %} {% for d in denuncias %}
+      <div class="denuncia-item">
+        <p><strong>Categoria:</strong> {{ d['categoria'] }}</p>
+        <p><strong>Descrição:</strong> {{ d['descricao'] }}</p>
+        <p>
+          <strong>Endereço:</strong> {{ d['logradouro'] }}, {{ d['numero'] }} -
+          {{ d['bairro'] }}, {{ d['cidade'] }} / {{ d['uf'] }} - CEP: {{
+          d['cep'] }}
+        </p>
+        <p><strong>Referência:</strong> {{ d['referencia'] }}</p>
+        {% if d['anexo'] %}
+        <p><strong>Anexo enviado:</strong> {{ d['anexo'] }}</p>
+        {% endif %} {% if d['nome'] == 'Anônimo' %}
+        <p><em>Denúncia anônima</em></p>
+        {% else %}
+        <p><em>Dados pessoais ocultados por privacidade.</em></p>
+        {% endif %}
+      </div>
+      {% endfor %} {% else %}
+      <p>Nenhuma denúncia registrada ainda.</p>
+      {% endif %}
+    </div>
+  </body>
 </html>

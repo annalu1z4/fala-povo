@@ -1,13 +1,36 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fala, Povo!</title>
-</head>
-<body>
-    <h1>Bem-vindo ao Fala, Povo!</h1>
-    <p>Sua voz importa! Denuncie, colabore e transforme sua comunidade.</p>
-    <a href="/denunciar">Fazer uma denúncia</a> | <a href="/denuncias">Ver denúncias</a>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='favicon.png') }}"
+      type="image/png"
+    />
+  </head>
+  <body>
+    <nav class="navbar">
+      <span class="logo">📢 Fala, Povo!</span>
+      <ul>
+        <li><a href="/">Início</a></li>
+        <li><a href="/denunciar">Denunciar</a></li>
+        <li><a href="/denuncias">Ver denúncias</a></li>
+      </ul>
+    </nav>
 
-</body>
+    <div class="hero">
+      <h1>Sua voz importa!</h1>
+      <p>
+        Bem-vindo(a) ao Fala, Povo! Denuncie, colabore e transforme sua
+        comunidade.
+      </p>
+      <a href="/denunciar" class="btn">Fazer uma denúncia</a>
+    </div>
+  </body>
 </html>
