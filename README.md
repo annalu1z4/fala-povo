@@ -27,7 +27,7 @@ Este projeto foi desenvolvido como parte da Atividade Extensionista II do curso 
 - Python 3.12
 - Flask (microframework web)
 - HTML5 + CSS3 personalizados (sem frameworks externos)
-- JSON (como banco de dados leve)
+- SQLite
 - Hospedagem via Render
 
 ---
@@ -41,7 +41,7 @@ fala-povo/
 ├── templates/         # Páginas HTML
 ├── uploads/           # Anexos enviados pelos usuários
 ├── app.py             # Lógica principal da aplicação Flask
-├── denuncias.json     # Armazena todas as denúncias
+├── denuncias.db       # Armazena todas as denúncias
 ├── README.md          # Este arquivo
 └── requirements.txt   # Dependências do projeto
 ```
